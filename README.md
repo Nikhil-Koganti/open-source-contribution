@@ -1,9 +1,12 @@
 # Contribution 1: Adapter: Qwen Code
 
-**Contribution Number:** 1
+**Contribution Number:** 2
+
 **Student:** Nikhil Koganti
+
 **Issue:** https://github.com/orthogonalhq/nous-core/issues/296
-**Status:** Phase I Complete
+
+**Status:** Phase II Complete
 
 ---
 
