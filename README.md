@@ -52,83 +52,47 @@ The issue specifically says not to modify the `AgentAdapter` contract or the sha
 
 ## Reproduction Process
 
-### Environment Setup
-
-I have not completed full local reproduction yet. During the next phase, I plan to fork the repository, clone my fork locally, install the project dependencies, and inspect the existing Claude and Codex adapter implementations.
-
 ### Steps to Reproduce
-
-1. Open the `orthogonalhq/nous-core` repository.
-2. Review the existing coding agent adapters in `self/subcortex/coding-agents/src/`.
-3. Check whether a Qwen Code adapter exists.
-4. Observe that there is no `qwen-code-adapter.ts` file implementing Qwen Code support.
-
-### Reproduction Evidence
-
-* **Commit showing reproduction:** Not available yet.
-* **Screenshots/logs:** Not available yet.
-* **My findings:** The issue asks for a new Qwen Code adapter implementation, tests, schema validation, and export updates.
+1. Clone the repository fork and switch to the `dev` branch:
+   ```bash
+   git clone https://github.com/Nikhil-Koganti/nous-core-open-source.git
+   cd nous-core-open-source
+   git checkout dev
+   ```
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+3. Build the project and run existing tests to establish a baseline:
+   ```bash
+   pnpm build
+   pnpm test
+   ```
 
 ---
 
+### Reproduction Evidence
+* **Fork Branch URL**: [Nikhil-Koganti/nous-core-open-source (dev branch)](https://github.com/Nikhil-Koganti/nous-core-open-source/tree/dev)
+
+---
+
+### Implementation Plan
+* **Create Adapter**: Implement the `AgentAdapter` interface in a new file [qwen-code-adapter.ts](file:///c:/Users/Nikhil/Documents/nous-open-source/self/subcortex/coding-agents/src/qwen-code-adapter.ts) matching the contract defined in [adapter.ts](file:///c:/Users/Nikhil/Documents/nous-open-source/self/shared/src/types/adapter.ts). The adapter will spawn the Qwen Code terminal CLI process, translate inputs/outputs, and validate them against the Zod schemas from `@nous/shared`.
+* **Export Adapter**: Register and export the `QwenCodeAdapter` from [index.ts](file:///c:/Users/Nikhil/Documents/nous-open-source/self/subcortex/coding-agents/src/index.ts).
+* **Add Conformance Tests**: Create unit/conformance tests in `self/subcortex/coding-agents/src/__tests__/qwen-code-adapter.test.ts` matching the lifecycle patterns of other adapters.
+* **Verify**: Run `pnpm typecheck`, `pnpm lint`, and `pnpm test` locally to verify that all schemas and type checks pass.
+
+### Environment Setup
+
+I have forked and setup the full repo including using antigravity for ide and agentic reviewing of the code.
+
 ## Solution Approach
 
-### Analysis
+### Initial Analysis
 
 My initial understanding is that this issue is mainly an adapter implementation task. The project already has similar adapters for Claude and Codex, so the Qwen Code adapter should likely follow the same structure while changing the command execution details for Qwen Code.
 
 The root cause is not a bug in the existing adapters. Instead, the missing functionality is that Qwen Code has not yet been connected to the project’s shared `AgentAdapter` interface.
-
-### Proposed Solution
-
-I plan to implement a new `qwen-code-adapter.ts` file that follows the `AgentAdapter` contract. I will use the Claude and Codex adapters as references, validate data with the existing Zod schemas, export the new adapter from `index.ts`, and add tests in the existing test directory.
-
-### Implementation Plan
-
-Using the UMPIRE framework:
-
-**Understand:**
-The issue asks for a new Qwen Code adapter that implements the required `AgentAdapter` methods without changing the shared adapter contract or Zod schemas.
-
-**Match:**
-I will study the existing `claude-adapter.ts` and `codex-adapter.ts` files to understand the expected structure, method behavior, error handling, artifact collection, and test patterns.
-
-**Plan:**
-
-1. Fork and clone `orthogonalhq/nous-core`.
-2. Install dependencies and run the existing test suite.
-3. Review `AgentAdapter` in `self/shared/src/types/adapter.ts`.
-4. Review `claude-adapter.ts` and `codex-adapter.ts`.
-5. Create `self/subcortex/coding-agents/src/qwen-code-adapter.ts`.
-6. Implement the required methods:
-
-   * `prepare`
-   * `execute`
-   * `captureTrace`
-   * `captureSideEffects`
-   * `collectArtifacts`
-   * `cleanup`
-7. Validate input and output using the existing Zod schemas.
-8. Export the adapter from `self/subcortex/coding-agents/src/index.ts`.
-9. Add tests in `self/subcortex/coding-agents/src/__tests__/`.
-10. Run tests and fix any failures.
-11. Open a pull request explaining the implementation.
-
-**Implement:**
-Implementation has not started yet.
-
-**Review:**
-Before submitting a pull request, I will confirm that:
-
-* The adapter implements the existing `AgentAdapter` contract.
-* The shared adapter type and Zod schemas are not modified.
-* The implementation follows the style of the Claude and Codex adapters.
-* The new adapter is exported from `index.ts`.
-* Tests are included for the expected behavior.
-* No unrelated files are changed.
-
-**Evaluate:**
-I will verify the solution by running the relevant tests and manually checking that the new Qwen Code adapter behaves consistently with the existing coding agent adapters.
 
 ---
 
