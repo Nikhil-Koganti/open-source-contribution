@@ -1,12 +1,12 @@
-# Contribution 1: Adapter: Qwen Code
+# Adapter: Qwen Code
 
-**Contribution Number:** 2
+**Contribution Number:** 3
 
 **Student:** Nikhil Koganti
 
 **Issue:** https://github.com/orthogonalhq/nous-core/issues/296
 
-**Status:** Phase II Complete
+**Status:** Phase III Complete
 
 ---
 
@@ -75,7 +75,8 @@ The issue specifically says not to modify the `AgentAdapter` contract or the sha
 ---
 
 ### Reproduction Evidence
-* **Fork Branch URL**: [Nikhil-Koganti/nous-core-open-source (dev branch)](https://github.com/Nikhil-Koganti/nous-core-open-source/tree/dev)
+* **Dev Branch URL**: [Nikhil-Koganti/nous-core-open-source (dev branch)](https://github.com/Nikhil-Koganti/nous-core-open-source/tree/dev)
+* **Qwen Code Branch URL**: [Nikhil-Koganti/nous-core-open-source (qwen-code-provider branch)](https://github.com/Nikhil-Koganti/nous-core-open-source/tree/qwen-code-provider)
 
 ---
 
@@ -85,17 +86,56 @@ The issue specifically says not to modify the `AgentAdapter` contract or the sha
 * **Add Conformance Tests**: Create unit/conformance tests in `self/subcortex/coding-agents/src/__tests__/qwen-code-adapter.test.ts` matching the lifecycle patterns of other adapters.
 * **Verify**: Run `pnpm typecheck`, `pnpm lint`, and `pnpm test` locally to verify that all schemas and type checks pass.
 
-### Environment Setup
+### Phase III Progress
 
-I have forked and setup the full repo including using antigravity for ide and agentic reviewing of the code.
+I implemented the Qwen Code provider using the updated provider-adapter integration branch requirements. The original issue described an `AgentAdapter` implementation under `self/subcortex/coding-agents`, but the maintainer clarified that CLI-backed integrations should now be implemented as provider leaves under `self/subcortex/providers/src/providers/<vendor>/`.
 
-## Solution Approach
+I created a new `qwen-code` provider leaf following the existing `codex-cli` provider structure. The implementation includes provider definition metadata, adapter wiring, CLI execution handling, exports, generated provider registry updates, and unit/integration test coverage.
 
-### Initial Analysis
+### Code Changes
 
-My initial understanding is that this issue is mainly an adapter implementation task. The project already has similar adapters for Claude and Codex, so the Qwen Code adapter should likely follow the same structure while changing the command execution details for Qwen Code.
+* **Development branch:** https://github.com/Nikhil-Koganti/nous-core-open-source/tree/qwen-code-provider
+* **Main commit:** https://github.com/Nikhil-Koganti/nous-core-open-source/commit/9259bcfe
 
-The root cause is not a bug in the existing adapters. Instead, the missing functionality is that Qwen Code has not yet been connected to the project’s shared `AgentAdapter` interface.
+Files added or updated include:
+
+* `self/subcortex/providers/src/providers/qwen-code/adapter.ts`
+* `self/subcortex/providers/src/providers/qwen-code/definition.ts`
+* `self/subcortex/providers/src/providers/qwen-code/implementation.ts`
+* `self/subcortex/providers/src/providers/qwen-code/index.ts`
+* `self/subcortex/providers/src/providers/qwen-code/provider.ts`
+* `self/subcortex/providers/src/__tests__/providers/qwen-code.test.ts`
+* provider registry/codegen-related files for adapter and definition registration
+
+Key implementation decisions:
+
+* Implemented Qwen Code as a CLI-backed provider leaf, not as the old `AgentAdapter`.
+* Used `ProviderDefinitionLeaf`.
+* Used `vendorKey: 'qwen-code'`.
+* Did not hand-author `wellKnownProviderId`, because provider IDs are now derived from `vendorKey`.
+* Declared `executionCapabilityProfile` for the CLI provider.
+* Added tests for provider behavior and registry integration.
+
+* Project repository: https://github.com/orthogonalhq/nous-core
+* Chosen GitHub issue: https://github.com/orthogonalhq/nous-core/issues/296
+* Qwen Code project: https://github.com/QwenLM/qwen-code
+
+---
+## Pull Request
+
+**PR Link:** Not submitted yet.
+
+**Active Development Branch:** https://github.com/Nikhil-Koganti/nous-core-open-source/tree/qwen-code-provider
+
+**Latest Commit:** https://github.com/Nikhil-Koganti/nous-core-open-source/commit/9259bcfe
+
+**PR Description:** Adds Qwen Code as a CLI-backed provider leaf under the updated provider-adapter integration architecture.
+
+**Maintainer Feedback:**
+
+The maintainer clarified that the original `AgentAdapter` instructions are now historical context. The current target is a provider leaf under `self/subcortex/providers/src/providers/<vendor>/`, using `ProviderDefinitionLeaf`, derived provider IDs from `vendorKey`, and `executionCapabilityProfile`.
+
+**Status:** Phase III Complete; ready to prepare a draft PR.
 
 ---
 
@@ -103,70 +143,23 @@ The root cause is not a bug in the existing adapters. Instead, the missing funct
 
 ### Unit Tests
 
-* [ ] Test that the Qwen Code adapter can be created and exposes the required `AgentAdapter` methods.
-* [ ] Test that input and output validation uses the existing Zod schemas.
-* [ ] Test that the adapter handles execution results correctly.
-* [ ] Test that trace capture works as expected.
-* [ ] Test that side effects and artifacts are collected correctly.
-* [ ] Test that cleanup behavior works correctly.
+* [x] Added provider tests for the Qwen Code provider in `self/subcortex/providers/src/__tests__/providers/qwen-code.test.ts`.
+* [x] Tested provider definition metadata and CLI capability configuration.
+* [x] Tested adapter behavior using mocked CLI execution paths.
+* [x] Verified the provider is wired into provider adapter and provider definition registration.
 
-### Integration Tests
+### Integration / Registry Validation
 
-* [ ] Confirm the adapter is exported from `self/subcortex/coding-agents/src/index.ts`.
-* [ ] Confirm the Qwen Code adapter follows the same usage pattern as the Claude and Codex adapters.
+* [x] Updated provider registry/codegen-related files so the new provider is discoverable.
+* [x] Added or updated tests covering provider definitions, adapter resolution, provider codegen, and provider pipeline integration.
 
-### Manual Testing
+### Manual Validation
 
-Manual testing has not been completed yet. I will update this section after I set up the repository locally and understand how the existing adapter tests are run.
+* [x] Confirmed the implementation is committed locally and pushed to the fork branch `qwen-code-provider`.
+* [x] Confirmed local and remote branch are synced at commit `9259bcfe`.
 
----
+### Remaining Validation Before PR
 
-## Implementation Notes
-
-### Week 1 Progress
-
-I completed Phase I setup by creating my GitHub and Slack accounts, selecting this GitHub issue, commenting on the issue, and marking the issue in the course spreadsheet. I also created this Contribution README to document my understanding of the issue and my plan for working on it.
-
-### Code Changes
-
-* **Files modified:** None yet.
-* **Key commits:** None yet.
-* **Approach decisions:** I am starting by studying the existing Claude and Codex adapters so that the Qwen Code adapter follows the project’s current design instead of introducing a new pattern.
-
----
-
-## Pull Request
-
-**PR Link:** Not submitted yet.
-
-**PR Description:** To be added after implementation.
-
-**Maintainer Feedback:**
-
-* No maintainer feedback yet.
-
-**Status:** Not started.
-
----
-
-## Learnings & Reflections
-
-### Technical Skills Gained
-
-So far, I have practiced reading an open-source issue, identifying the expected files involved, and translating the issue requirements into an implementation plan. I also learned more about how adapter-based designs allow one project to support multiple tools through a shared interface.
-
-### Challenges Overcome
-
-The main challenge so far was understanding the difference between the Contribution README repository and the forked project repository. The Contribution README repository documents my process, while the forked `nous-core` repository is where I will eventually make code changes.
-
-### What I'd Do Differently Next Time
-
-Next time, I would review the issue, affected files, and acceptance criteria earlier so that I can create a more specific README from the beginning.
-
----
-
-## Resources Used
-
-* Project repository: https://github.com/orthogonalhq/nous-core
-* Chosen GitHub issue: https://github.com/orthogonalhq/nous-core/issues/296
-* Qwen Code project: https://github.com/QwenLM/qwen-code
+* [ ] Run the full project build after dependencies are installed.
+* [ ] Run the full provider package test suite.
+* [ ] Open a draft PR against the maintainer’s requested integration branch.
