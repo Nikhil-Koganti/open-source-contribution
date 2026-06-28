@@ -1,12 +1,12 @@
 # Adapter: Qwen Code
 
-**Contribution Number:** 3
+**Contribution Number:** 1
 
 **Student:** Nikhil Koganti
 
 **Issue:** https://github.com/orthogonalhq/nous-core/issues/296
 
-**Status:** Phase III Complete
+**Status:** Phase IV Complete
 
 ---
 
@@ -15,6 +15,19 @@
 I chose this issue because it focuses on implementing a new `AgentAdapter` for Qwen Code in the `nous-core` project. The issue is asking for support for Qwen Code, a terminal-based coding agent, by creating a new adapter file that follows the same structure as the existing Claude and Codex adapters.
 
 This issue matters because adapters allow the project to support different coding agents through a shared interface. I chose it because it gives me a chance to work with TypeScript, adapter patterns, command-line tool integration, schema validation, and tests while still having existing reference files to guide my implementation.
+
+---
+## Phase IV - Pull Request Submitted
+
+**PR Link:**: https://github.com/orthogonalhq/nous-core/pull/416
+
+**Summary of Contribution:**
+Added Qwen Code as a CLI-backed provider leaf under `self/subcortex/providers/src/providers/qwen-code/`, following the updated #296 contract. Built on `ProviderDefinitionLeaf` with the provider ID derived from `vendorKey` and `executionCapabilityProfile: one_shot_command`; regenerated the provider catalogs and added unit/integration tests (13 leaf tests + catalog assertions). Opened against the integration branch `feat/contributor-friendly-inference-provider-surface`. Closes #296.
+
+**Feedback / Next Steps:**
+No review comments yet. The only prior guidance was the maintainer's 2026-06-18 issue update redirecting CLI integrations from the old `AgentAdapter` path to a provider leaf, which this implementation follows. Next step is to respond to reviewer feedback and iterate as needed; verification is green locally (376 provider tests passed / 2 live-only skipped, lint clean, typecheck exit 0, catalogs no-diff).
+
+**Status:** Awaiting review
 
 ---
 
@@ -119,46 +132,6 @@ Key implementation decisions:
 * Project repository: https://github.com/orthogonalhq/nous-core
 * Chosen GitHub issue: https://github.com/orthogonalhq/nous-core/issues/296
 * Qwen Code project: https://github.com/QwenLM/qwen-code
-
----
-## Pull Request
-
-**PR Link:** Not submitted yet.
-
-**Active Development Branch:** https://github.com/Nikhil-Koganti/nous-core-open-source/tree/qwen-code-provider
-
-**Latest Commit:** https://github.com/Nikhil-Koganti/nous-core-open-source/commit/9259bcfe
-
-**PR Description:** Adds Qwen Code as a CLI-backed provider leaf under the updated provider-adapter integration architecture.
-
-**Maintainer Feedback:**
-
-The maintainer clarified that the original `AgentAdapter` instructions are now historical context. The current target is a provider leaf under `self/subcortex/providers/src/providers/<vendor>/`, using `ProviderDefinitionLeaf`, derived provider IDs from `vendorKey`, and `executionCapabilityProfile`.
-
-**Status:** Phase III Complete; ready to prepare a draft PR.
-
----
-
-## Testing Strategy
-
-### Unit Tests
-
-* [x] Added provider tests for the Qwen Code provider in `self/subcortex/providers/src/__tests__/providers/qwen-code.test.ts`.
-* [x] Tested provider definition metadata and CLI capability configuration.
-* [x] Tested adapter behavior using mocked CLI execution paths.
-* [x] Verified the provider is wired into provider adapter and provider definition registration.
-
-### Integration / Registry Validation
-
-* [x] Updated provider registry/codegen-related files so the new provider is discoverable.
-* [x] Added or updated tests covering provider definitions, adapter resolution, provider codegen, and provider pipeline integration.
-
-### Manual Validation
-
-* [x] Confirmed the implementation is committed locally and pushed to the fork branch `qwen-code-provider`.
-* [x] Confirmed local and remote branch are synced at commit `9259bcfe`.
-
-### Remaining Validation Before PR
 
 * [ ] Run the full project build after dependencies are installed.
 * [ ] Run the full provider package test suite.
