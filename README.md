@@ -27,7 +27,9 @@ Added Qwen Code as a CLI-backed provider leaf under `self/subcortex/providers/sr
 **Feedback / Next Steps:**
 No review comments yet. The only prior guidance was the maintainer's 2026-06-18 issue update redirecting CLI integrations from the old `AgentAdapter` path to a provider leaf, which this implementation follows. Next step is to respond to reviewer feedback and iterate as needed; verification is green locally (376 provider tests passed / 2 live-only skipped, lint clean, typecheck exit 0, catalogs no-diff).
 
-**Status:** Awaiting review
+**Update:** The author reviewed the PR and requested changes, primarily around the provider's runtime safety posture (default auto-approved execution, headless one-shot invocation, cancellation/timeout handling, Windows shell execution, and environment inheritance). I am currently iterating on the fixes requested by the author.
+
+**Status:** Changes requested — iterating on author feedback
 
 ---
 
