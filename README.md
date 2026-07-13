@@ -19,6 +19,8 @@ This issue matters because adapters allow the project to support different codin
 ---
 ## Phase IV - Pull Request Submitted
 
+**Update(July 13):** The author requested further changes related to the Windows launch path so the no-shell safety fix doesn't break the default npm-installed Qwen Code shim. So, executable resolution now prefers a directly-spawnable binary (qwen.exe) over a .cmd/.bat shim, and falls back to a clear configuration error—pointing users to NOUS_QWEN_CODE_BIN / QWEN_CODE_BIN—when only a non-launchable shim is found, since Node cannot spawn .cmd shims under shell: false. Awaiting feedback for my new changes.
+
 **Update(July 1st):** The author reviewed the PR and requested changes, primarily around the provider's runtime safety posture (default auto-approved execution, headless one-shot invocation, cancellation/timeout handling, Windows shell execution, and environment inheritance). I have currently pushed my fixes to the same PR and also resolved all the merge conflicts.Currently waiting for author review. 
 
 **PR Link:**: https://github.com/orthogonalhq/nous-core/pull/416
