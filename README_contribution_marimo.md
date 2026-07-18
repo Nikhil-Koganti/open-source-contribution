@@ -1,11 +1,11 @@
 # Contribution 1: Fix Altair Zoom and Pan on Linux/GNOME/Wayland
 
 **Contribution Number:** 1  
-**Student:** [Your Name]  
+**Student:** Nikhil Koganti  
 **Course:** CodePath AI301  
 **Project:** marimo  
 **Issue:** https://github.com/marimo-team/marimo/issues/3812  
-**Status:** Phase I — In Progress
+**Status:** Phase I - In progress
 
 ---
 
@@ -263,16 +263,11 @@ Manual testing will include checking that modifier combinations do not unexpecte
 
 ### Code Changes
 
-- **Files modified:** [List after implementation]
-- **Key commits:** [Links]
-- **Approach decisions:** [Record decisions and supporting evidence]
-- **Commands used for validation:** [List test, lint, and formatting commands]
-
 ---
 
 ## Pull Request
 
-**PR Link:** [GitHub pull request URL]
+**PR Link:** 
 
 **Draft PR Summary:**
 
@@ -280,8 +275,7 @@ This contribution investigates and fixes Altair chart zoom and pan behavior on L
 
 **Maintainer Feedback:**
 
-- [Date]: [Summary of feedback]
-- [Date]: [How the feedback was addressed]
+- 
 
 **Status:** Not submitted
 
@@ -332,8 +326,3 @@ A merged pull request is the preferred outcome, but the class project will also 
 
 - marimo issue #3812: https://github.com/marimo-team/marimo/issues/3812
 - marimo repository: https://github.com/marimo-team/marimo
-- marimo contribution documentation: [Add link]
-- Original zoom-and-pan implementation or related pull request: [Add link]
-- Altair interaction documentation: [Add link]
-- Vega/Vega-Lite event documentation: [Add link]
-- Fedora, GNOME, or Wayland documentation used during debugging: [Add links]
